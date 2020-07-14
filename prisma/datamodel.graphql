@@ -1,0 +1,40 @@
+type Attribute {
+  id: ID! @id @unique
+  key: String! 
+  value: String! @unique
+  resources: [Resource!] @relation(name: "AttributeToResource", onDelete: SET_NULL)
+  repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
+  check: Check @relation(name: "AttributeToCheck", onDelete: CASCADE, link:INLINE)
+  state: State @relation(name: "AttributeToState", onDelete: SET_NULL, link:INLINE)
+}
+
+type Resource {
+  id: ID! @id @unique
+  identifier: String! @unique
+  attributes: [Attribute]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
+}
+
+type Repair {
+  id: ID! @id @unique
+  command: String! @unique
+  attribute: Attribute! @relation(name: "AttributeToRepair", onDelete: SET_NULL)
+}
+
+type Check {
+  id: ID! @id @unique
+  command: String! @unique
+  attribute: Attribute! @relation(name: "AttributeToCheck", onDelete: SET_NULL)
+}
+
+type State {
+  id: ID! @id @unique
+  value: String!
+  attribute: Attribute! @relation(name: "AttributeToState", onDelete: SET_NULL)
+  target: Target! @relation(name: "StateToTarget", onDelete: SET_NULL)
+}
+
+type Target {
+  id: ID! @id @unique
+  identifier: String!
+  states: [State]! @relation(name: "StateToTarget", onDelete: CASCADE)
+}

@@ -1,0 +1,82 @@
+# starting point
+1. have a target
+1. define and save policy
+1. read target
+1. compare to policy
+1. do something or do nothing
+1. save state
+
+# In the db
+policy
+------
+resources hasMany
+assertions: hasMany
+
+state
+-----
+resources hasMany
+policy hasOne
+node hasOne
+
+resource
+--------
+attributes hasMany
+
+node
+-----
+attributes hasMany
+state hasOne
+platform hasOne
+
+command
+-------
+idempotent
+side-effects: ??? # potential for unmanaged policy (example installing a package can have side-effects unless you have accounted for it your policy)
+assertion
+action
+platform
+provider???
+
+
+# policy
+path: '/tmp/foo.txt'
+assertion: "exists"
+assertion: "executable"
+
+# compile assertion
+# depends on the Policy
+path('/tmp/foo.txt').assertion('exists') {
+  true || false
+}
+path('/tmp/foo.txt').assertion('executable') {
+  true || false
+}
+
+# publish or subscribe policy to target
+# Save state
+node(name).subscribes('policyName').saveState # Assumed be 1:1 to policy resource shape
+node(name).subscribes('policyName').assertState # Missing in Chef
+node(name).subscribes('policyName').repairState # Missing in InSpec
+
+# implement assertion
+# knowledge and commands and implementation provider
+# depends on node.platform
+execute.('stat /tmp/foo.txt')
+execute.('ruby -e \'puts File.executable?("/tmp/foo.txt")\'')
+
+# decide action (So what?)
+# depends on the assertion results, knowledge, commands, implementation provider, and side-effects
+action: NULL, idempotent: true, side-effects: NULL
+action.execute('chmod +=x /tmp/foo.txt'), idempotent: true, side-effects: ???
+
+# persist state
+state: 
+
+
+# scenarios
+1. No state data in database
+   - 
+2. State in database
+   - 
+3. No resource in profiler
+   -
