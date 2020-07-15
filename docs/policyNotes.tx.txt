@@ -1,11 +1,62 @@
+Bourdain / Chef BoyaRDB
+
+# Bourdain
+A policy definition tool based on a database and a strict declarative language API.
+
+# BoyaRDB
+A relational database that filled with policy and state data that adheres to both a configuration and compliance use case.
+
+??? Provider
+The state convergence, profiling, and policy compliance agent that provides the implementation details to manage specific targets.
+
 policy:
 dircetory /tmp/foo created
-dircetory /tmp/bar !created
-dircetory /tmp/foo/baz created
+
 
 state:
-directory /tmp/foo !exists
-directory /tmp/bar exists
+run the check.command
+  stdout: NULL
+  exit: 1
+  stderr: NULL
+
+value is not "true"
+run the repair.command
+  stdout: NULL
+  exit: 0
+  stderr: NULL
+
+run the check.command
+  stdout: "true"
+  exit: 0
+  stderr: NULL
+
+
+What is convergence defined by?
+
+
+# Tao of Compliance and Configuration Management in Bourdain
+In compliance assertions are made to determine whether state adheres to policy
+In compliance if an assertion is false there is no action other then repair or request an exception to policy
+In compliance if an assertion is true there is only the NULL action
+In configuration management you can adhere to the assertions and actions rules of compliance
+
+
+Example 2:
+
+password must be longer than 14 charcters
+identifier: "password length of user Stephen"
+attributes: {[
+  {
+    key: password_length
+    value: "> 14 characters"
+    repair: {
+      command: "set pswd "
+    }
+  }
+]}
+
+
+
 
 
 existence?

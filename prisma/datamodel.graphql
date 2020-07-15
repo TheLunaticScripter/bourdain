@@ -26,6 +26,7 @@ type Check {
   attribute: Attribute! @relation(name: "AttributeToCheck", onDelete: SET_NULL)
 }
 
+## Implementation of Provider
 type State {
   id: ID! @id @unique
   value: String!
