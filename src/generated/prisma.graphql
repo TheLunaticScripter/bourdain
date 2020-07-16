@@ -1,0 +1,2018 @@
+# source: http://localhost:4466/bourdain/dev
+# timestamp: Thu Jul 16 2020 05:29:22 GMT-0400 (Eastern Daylight Time)
+
+type AggregateAttribute {
+  count: Int!
+}
+
+type AggregateCheck {
+  count: Int!
+}
+
+type AggregateRepair {
+  count: Int!
+}
+
+type AggregateResource {
+  count: Int!
+}
+
+type AggregateState {
+  count: Int!
+}
+
+type AggregateTarget {
+  count: Int!
+}
+
+type Attribute implements Node {
+  id: ID!
+  key: String!
+  value: String!
+  resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource!]
+  repair: Repair
+  check: Check
+  state: State
+}
+
+"""A connection to a list of items."""
+type AttributeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AttributeEdge]!
+  aggregate: AggregateAttribute!
+}
+
+input AttributeCreateInput {
+  id: ID
+  key: String!
+  value: String!
+  resources: ResourceCreateManyWithoutAttributesInput
+  repair: RepairCreateOneWithoutAttributeInput
+  check: CheckCreateOneWithoutAttributeInput
+  state: StateCreateOneWithoutAttributeInput
+}
+
+input AttributeCreateManyWithoutResourcesInput {
+  create: [AttributeCreateWithoutResourcesInput!]
+  connect: [AttributeWhereUniqueInput!]
+}
+
+input AttributeCreateOneWithoutCheckInput {
+  create: AttributeCreateWithoutCheckInput
+  connect: AttributeWhereUniqueInput
+}
+
+input AttributeCreateOneWithoutRepairInput {
+  create: AttributeCreateWithoutRepairInput
+  connect: AttributeWhereUniqueInput
+}
+
+input AttributeCreateOneWithoutStateInput {
+  create: AttributeCreateWithoutStateInput
+  connect: AttributeWhereUniqueInput
+}
+
+input AttributeCreateWithoutCheckInput {
+  id: ID
+  key: String!
+  value: String!
+  resources: ResourceCreateManyWithoutAttributesInput
+  repair: RepairCreateOneWithoutAttributeInput
+  state: StateCreateOneWithoutAttributeInput
+}
+
+input AttributeCreateWithoutRepairInput {
+  id: ID
+  key: String!
+  value: String!
+  resources: ResourceCreateManyWithoutAttributesInput
+  check: CheckCreateOneWithoutAttributeInput
+  state: StateCreateOneWithoutAttributeInput
+}
+
+input AttributeCreateWithoutResourcesInput {
+  id: ID
+  key: String!
+  value: String!
+  repair: RepairCreateOneWithoutAttributeInput
+  check: CheckCreateOneWithoutAttributeInput
+  state: StateCreateOneWithoutAttributeInput
+}
+
+input AttributeCreateWithoutStateInput {
+  id: ID
+  key: String!
+  value: String!
+  resources: ResourceCreateManyWithoutAttributesInput
+  repair: RepairCreateOneWithoutAttributeInput
+  check: CheckCreateOneWithoutAttributeInput
+}
+
+"""An edge in a connection."""
+type AttributeEdge {
+  """The item at the end of the edge."""
+  node: Attribute!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum AttributeOrderByInput {
+  id_ASC
+  id_DESC
+  key_ASC
+  key_DESC
+  value_ASC
+  value_DESC
+}
+
+type AttributePreviousValues {
+  id: ID!
+  key: String!
+  value: String!
+}
+
+input AttributeScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttributeScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttributeScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttributeScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+type AttributeSubscriptionPayload {
+  mutation: MutationType!
+  node: Attribute
+  updatedFields: [String!]
+  previousValues: AttributePreviousValues
+}
+
+input AttributeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttributeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttributeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttributeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AttributeWhereInput
+}
+
+input AttributeUpdateInput {
+  key: String
+  value: String
+  resources: ResourceUpdateManyWithoutAttributesInput
+  repair: RepairUpdateOneWithoutAttributeInput
+  check: CheckUpdateOneWithoutAttributeInput
+  state: StateUpdateOneWithoutAttributeInput
+}
+
+input AttributeUpdateManyDataInput {
+  key: String
+  value: String
+}
+
+input AttributeUpdateManyMutationInput {
+  key: String
+  value: String
+}
+
+input AttributeUpdateManyWithoutResourcesInput {
+  create: [AttributeCreateWithoutResourcesInput!]
+  connect: [AttributeWhereUniqueInput!]
+  set: [AttributeWhereUniqueInput!]
+  disconnect: [AttributeWhereUniqueInput!]
+  delete: [AttributeWhereUniqueInput!]
+  update: [AttributeUpdateWithWhereUniqueWithoutResourcesInput!]
+  updateMany: [AttributeUpdateManyWithWhereNestedInput!]
+  deleteMany: [AttributeScalarWhereInput!]
+  upsert: [AttributeUpsertWithWhereUniqueWithoutResourcesInput!]
+}
+
+input AttributeUpdateManyWithWhereNestedInput {
+  where: AttributeScalarWhereInput!
+  data: AttributeUpdateManyDataInput!
+}
+
+input AttributeUpdateOneRequiredWithoutCheckInput {
+  create: AttributeCreateWithoutCheckInput
+  connect: AttributeWhereUniqueInput
+  update: AttributeUpdateWithoutCheckDataInput
+  upsert: AttributeUpsertWithoutCheckInput
+}
+
+input AttributeUpdateOneRequiredWithoutRepairInput {
+  create: AttributeCreateWithoutRepairInput
+  connect: AttributeWhereUniqueInput
+  update: AttributeUpdateWithoutRepairDataInput
+  upsert: AttributeUpsertWithoutRepairInput
+}
+
+input AttributeUpdateOneRequiredWithoutStateInput {
+  create: AttributeCreateWithoutStateInput
+  connect: AttributeWhereUniqueInput
+  update: AttributeUpdateWithoutStateDataInput
+  upsert: AttributeUpsertWithoutStateInput
+}
+
+input AttributeUpdateWithoutCheckDataInput {
+  key: String
+  value: String
+  resources: ResourceUpdateManyWithoutAttributesInput
+  repair: RepairUpdateOneWithoutAttributeInput
+  state: StateUpdateOneWithoutAttributeInput
+}
+
+input AttributeUpdateWithoutRepairDataInput {
+  key: String
+  value: String
+  resources: ResourceUpdateManyWithoutAttributesInput
+  check: CheckUpdateOneWithoutAttributeInput
+  state: StateUpdateOneWithoutAttributeInput
+}
+
+input AttributeUpdateWithoutResourcesDataInput {
+  key: String
+  value: String
+  repair: RepairUpdateOneWithoutAttributeInput
+  check: CheckUpdateOneWithoutAttributeInput
+  state: StateUpdateOneWithoutAttributeInput
+}
+
+input AttributeUpdateWithoutStateDataInput {
+  key: String
+  value: String
+  resources: ResourceUpdateManyWithoutAttributesInput
+  repair: RepairUpdateOneWithoutAttributeInput
+  check: CheckUpdateOneWithoutAttributeInput
+}
+
+input AttributeUpdateWithWhereUniqueWithoutResourcesInput {
+  where: AttributeWhereUniqueInput!
+  data: AttributeUpdateWithoutResourcesDataInput!
+}
+
+input AttributeUpsertWithoutCheckInput {
+  update: AttributeUpdateWithoutCheckDataInput!
+  create: AttributeCreateWithoutCheckInput!
+}
+
+input AttributeUpsertWithoutRepairInput {
+  update: AttributeUpdateWithoutRepairDataInput!
+  create: AttributeCreateWithoutRepairInput!
+}
+
+input AttributeUpsertWithoutStateInput {
+  update: AttributeUpdateWithoutStateDataInput!
+  create: AttributeCreateWithoutStateInput!
+}
+
+input AttributeUpsertWithWhereUniqueWithoutResourcesInput {
+  where: AttributeWhereUniqueInput!
+  update: AttributeUpdateWithoutResourcesDataInput!
+  create: AttributeCreateWithoutResourcesInput!
+}
+
+input AttributeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AttributeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AttributeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AttributeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  key: String
+
+  """All values that are not equal to given value."""
+  key_not: String
+
+  """All values that are contained in given list."""
+  key_in: [String!]
+
+  """All values that are not contained in given list."""
+  key_not_in: [String!]
+
+  """All values less than the given value."""
+  key_lt: String
+
+  """All values less than or equal the given value."""
+  key_lte: String
+
+  """All values greater than the given value."""
+  key_gt: String
+
+  """All values greater than or equal the given value."""
+  key_gte: String
+
+  """All values containing the given string."""
+  key_contains: String
+
+  """All values not containing the given string."""
+  key_not_contains: String
+
+  """All values starting with the given string."""
+  key_starts_with: String
+
+  """All values not starting with the given string."""
+  key_not_starts_with: String
+
+  """All values ending with the given string."""
+  key_ends_with: String
+
+  """All values not ending with the given string."""
+  key_not_ends_with: String
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+  resources_every: ResourceWhereInput
+  resources_some: ResourceWhereInput
+  resources_none: ResourceWhereInput
+  repair: RepairWhereInput
+  check: CheckWhereInput
+  state: StateWhereInput
+}
+
+input AttributeWhereUniqueInput {
+  id: ID
+  value: String
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Check implements Node {
+  id: ID!
+  command: String!
+  attribute: Attribute!
+}
+
+"""A connection to a list of items."""
+type CheckConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CheckEdge]!
+  aggregate: AggregateCheck!
+}
+
+input CheckCreateInput {
+  id: ID
+  command: String!
+  attribute: AttributeCreateOneWithoutCheckInput!
+}
+
+input CheckCreateOneWithoutAttributeInput {
+  create: CheckCreateWithoutAttributeInput
+  connect: CheckWhereUniqueInput
+}
+
+input CheckCreateWithoutAttributeInput {
+  id: ID
+  command: String!
+}
+
+"""An edge in a connection."""
+type CheckEdge {
+  """The item at the end of the edge."""
+  node: Check!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CheckOrderByInput {
+  id_ASC
+  id_DESC
+  command_ASC
+  command_DESC
+}
+
+type CheckPreviousValues {
+  id: ID!
+  command: String!
+}
+
+type CheckSubscriptionPayload {
+  mutation: MutationType!
+  node: Check
+  updatedFields: [String!]
+  previousValues: CheckPreviousValues
+}
+
+input CheckSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CheckSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CheckSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CheckSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CheckWhereInput
+}
+
+input CheckUpdateInput {
+  command: String
+  attribute: AttributeUpdateOneRequiredWithoutCheckInput
+}
+
+input CheckUpdateManyMutationInput {
+  command: String
+}
+
+input CheckUpdateOneWithoutAttributeInput {
+  create: CheckCreateWithoutAttributeInput
+  connect: CheckWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: CheckUpdateWithoutAttributeDataInput
+  upsert: CheckUpsertWithoutAttributeInput
+}
+
+input CheckUpdateWithoutAttributeDataInput {
+  command: String
+}
+
+input CheckUpsertWithoutAttributeInput {
+  update: CheckUpdateWithoutAttributeDataInput!
+  create: CheckCreateWithoutAttributeInput!
+}
+
+input CheckWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CheckWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CheckWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CheckWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  command: String
+
+  """All values that are not equal to given value."""
+  command_not: String
+
+  """All values that are contained in given list."""
+  command_in: [String!]
+
+  """All values that are not contained in given list."""
+  command_not_in: [String!]
+
+  """All values less than the given value."""
+  command_lt: String
+
+  """All values less than or equal the given value."""
+  command_lte: String
+
+  """All values greater than the given value."""
+  command_gt: String
+
+  """All values greater than or equal the given value."""
+  command_gte: String
+
+  """All values containing the given string."""
+  command_contains: String
+
+  """All values not containing the given string."""
+  command_not_contains: String
+
+  """All values starting with the given string."""
+  command_starts_with: String
+
+  """All values not starting with the given string."""
+  command_not_starts_with: String
+
+  """All values ending with the given string."""
+  command_ends_with: String
+
+  """All values not ending with the given string."""
+  command_not_ends_with: String
+  attribute: AttributeWhereInput
+}
+
+input CheckWhereUniqueInput {
+  id: ID
+  command: String
+}
+
+"""Raw JSON value"""
+scalar Json
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createAttribute(data: AttributeCreateInput!): Attribute!
+  createResource(data: ResourceCreateInput!): Resource!
+  createRepair(data: RepairCreateInput!): Repair!
+  createCheck(data: CheckCreateInput!): Check!
+  createState(data: StateCreateInput!): State!
+  createTarget(data: TargetCreateInput!): Target!
+  updateAttribute(data: AttributeUpdateInput!, where: AttributeWhereUniqueInput!): Attribute
+  updateResource(data: ResourceUpdateInput!, where: ResourceWhereUniqueInput!): Resource
+  updateRepair(data: RepairUpdateInput!, where: RepairWhereUniqueInput!): Repair
+  updateCheck(data: CheckUpdateInput!, where: CheckWhereUniqueInput!): Check
+  updateState(data: StateUpdateInput!, where: StateWhereUniqueInput!): State
+  updateTarget(data: TargetUpdateInput!, where: TargetWhereUniqueInput!): Target
+  deleteAttribute(where: AttributeWhereUniqueInput!): Attribute
+  deleteResource(where: ResourceWhereUniqueInput!): Resource
+  deleteRepair(where: RepairWhereUniqueInput!): Repair
+  deleteCheck(where: CheckWhereUniqueInput!): Check
+  deleteState(where: StateWhereUniqueInput!): State
+  deleteTarget(where: TargetWhereUniqueInput!): Target
+  upsertAttribute(where: AttributeWhereUniqueInput!, create: AttributeCreateInput!, update: AttributeUpdateInput!): Attribute!
+  upsertResource(where: ResourceWhereUniqueInput!, create: ResourceCreateInput!, update: ResourceUpdateInput!): Resource!
+  upsertRepair(where: RepairWhereUniqueInput!, create: RepairCreateInput!, update: RepairUpdateInput!): Repair!
+  upsertCheck(where: CheckWhereUniqueInput!, create: CheckCreateInput!, update: CheckUpdateInput!): Check!
+  upsertState(where: StateWhereUniqueInput!, create: StateCreateInput!, update: StateUpdateInput!): State!
+  upsertTarget(where: TargetWhereUniqueInput!, create: TargetCreateInput!, update: TargetUpdateInput!): Target!
+  updateManyAttributes(data: AttributeUpdateManyMutationInput!, where: AttributeWhereInput): BatchPayload!
+  updateManyResources(data: ResourceUpdateManyMutationInput!, where: ResourceWhereInput): BatchPayload!
+  updateManyRepairs(data: RepairUpdateManyMutationInput!, where: RepairWhereInput): BatchPayload!
+  updateManyChecks(data: CheckUpdateManyMutationInput!, where: CheckWhereInput): BatchPayload!
+  updateManyStates(data: StateUpdateManyMutationInput!, where: StateWhereInput): BatchPayload!
+  updateManyTargets(data: TargetUpdateManyMutationInput!, where: TargetWhereInput): BatchPayload!
+  deleteManyAttributes(where: AttributeWhereInput): BatchPayload!
+  deleteManyResources(where: ResourceWhereInput): BatchPayload!
+  deleteManyRepairs(where: RepairWhereInput): BatchPayload!
+  deleteManyChecks(where: CheckWhereInput): BatchPayload!
+  deleteManyStates(where: StateWhereInput): BatchPayload!
+  deleteManyTargets(where: TargetWhereInput): BatchPayload!
+  executeRaw(database: PrismaDatabase, query: String!): Json!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum PrismaDatabase {
+  default
+}
+
+type Query {
+  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute]!
+  resources(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Resource]!
+  repairs(where: RepairWhereInput, orderBy: RepairOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Repair]!
+  checks(where: CheckWhereInput, orderBy: CheckOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Check]!
+  states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State]!
+  targets(where: TargetWhereInput, orderBy: TargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Target]!
+  attribute(where: AttributeWhereUniqueInput!): Attribute
+  resource(where: ResourceWhereUniqueInput!): Resource
+  repair(where: RepairWhereUniqueInput!): Repair
+  check(where: CheckWhereUniqueInput!): Check
+  state(where: StateWhereUniqueInput!): State
+  target(where: TargetWhereUniqueInput!): Target
+  attributesConnection(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttributeConnection!
+  resourcesConnection(where: ResourceWhereInput, orderBy: ResourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ResourceConnection!
+  repairsConnection(where: RepairWhereInput, orderBy: RepairOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RepairConnection!
+  checksConnection(where: CheckWhereInput, orderBy: CheckOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CheckConnection!
+  statesConnection(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateConnection!
+  targetsConnection(where: TargetWhereInput, orderBy: TargetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TargetConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Repair implements Node {
+  id: ID!
+  command: String!
+  attribute: Attribute!
+}
+
+"""A connection to a list of items."""
+type RepairConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RepairEdge]!
+  aggregate: AggregateRepair!
+}
+
+input RepairCreateInput {
+  id: ID
+  command: String!
+  attribute: AttributeCreateOneWithoutRepairInput!
+}
+
+input RepairCreateOneWithoutAttributeInput {
+  create: RepairCreateWithoutAttributeInput
+  connect: RepairWhereUniqueInput
+}
+
+input RepairCreateWithoutAttributeInput {
+  id: ID
+  command: String!
+}
+
+"""An edge in a connection."""
+type RepairEdge {
+  """The item at the end of the edge."""
+  node: Repair!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum RepairOrderByInput {
+  id_ASC
+  id_DESC
+  command_ASC
+  command_DESC
+}
+
+type RepairPreviousValues {
+  id: ID!
+  command: String!
+}
+
+type RepairSubscriptionPayload {
+  mutation: MutationType!
+  node: Repair
+  updatedFields: [String!]
+  previousValues: RepairPreviousValues
+}
+
+input RepairSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RepairSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RepairSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RepairSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: RepairWhereInput
+}
+
+input RepairUpdateInput {
+  command: String
+  attribute: AttributeUpdateOneRequiredWithoutRepairInput
+}
+
+input RepairUpdateManyMutationInput {
+  command: String
+}
+
+input RepairUpdateOneWithoutAttributeInput {
+  create: RepairCreateWithoutAttributeInput
+  connect: RepairWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: RepairUpdateWithoutAttributeDataInput
+  upsert: RepairUpsertWithoutAttributeInput
+}
+
+input RepairUpdateWithoutAttributeDataInput {
+  command: String
+}
+
+input RepairUpsertWithoutAttributeInput {
+  update: RepairUpdateWithoutAttributeDataInput!
+  create: RepairCreateWithoutAttributeInput!
+}
+
+input RepairWhereInput {
+  """Logical AND on all given filters."""
+  AND: [RepairWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [RepairWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [RepairWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  command: String
+
+  """All values that are not equal to given value."""
+  command_not: String
+
+  """All values that are contained in given list."""
+  command_in: [String!]
+
+  """All values that are not contained in given list."""
+  command_not_in: [String!]
+
+  """All values less than the given value."""
+  command_lt: String
+
+  """All values less than or equal the given value."""
+  command_lte: String
+
+  """All values greater than the given value."""
+  command_gt: String
+
+  """All values greater than or equal the given value."""
+  command_gte: String
+
+  """All values containing the given string."""
+  command_contains: String
+
+  """All values not containing the given string."""
+  command_not_contains: String
+
+  """All values starting with the given string."""
+  command_starts_with: String
+
+  """All values not starting with the given string."""
+  command_not_starts_with: String
+
+  """All values ending with the given string."""
+  command_ends_with: String
+
+  """All values not ending with the given string."""
+  command_not_ends_with: String
+  attribute: AttributeWhereInput
+}
+
+input RepairWhereUniqueInput {
+  id: ID
+  command: String
+}
+
+type Resource implements Node {
+  id: ID!
+  identifier: String!
+  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute!]
+}
+
+"""A connection to a list of items."""
+type ResourceConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ResourceEdge]!
+  aggregate: AggregateResource!
+}
+
+input ResourceCreateInput {
+  id: ID
+  identifier: String!
+  attributes: AttributeCreateManyWithoutResourcesInput
+}
+
+input ResourceCreateManyWithoutAttributesInput {
+  create: [ResourceCreateWithoutAttributesInput!]
+  connect: [ResourceWhereUniqueInput!]
+}
+
+input ResourceCreateWithoutAttributesInput {
+  id: ID
+  identifier: String!
+}
+
+"""An edge in a connection."""
+type ResourceEdge {
+  """The item at the end of the edge."""
+  node: Resource!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ResourceOrderByInput {
+  id_ASC
+  id_DESC
+  identifier_ASC
+  identifier_DESC
+}
+
+type ResourcePreviousValues {
+  id: ID!
+  identifier: String!
+}
+
+input ResourceScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResourceScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResourceScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResourceScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  identifier: String
+
+  """All values that are not equal to given value."""
+  identifier_not: String
+
+  """All values that are contained in given list."""
+  identifier_in: [String!]
+
+  """All values that are not contained in given list."""
+  identifier_not_in: [String!]
+
+  """All values less than the given value."""
+  identifier_lt: String
+
+  """All values less than or equal the given value."""
+  identifier_lte: String
+
+  """All values greater than the given value."""
+  identifier_gt: String
+
+  """All values greater than or equal the given value."""
+  identifier_gte: String
+
+  """All values containing the given string."""
+  identifier_contains: String
+
+  """All values not containing the given string."""
+  identifier_not_contains: String
+
+  """All values starting with the given string."""
+  identifier_starts_with: String
+
+  """All values not starting with the given string."""
+  identifier_not_starts_with: String
+
+  """All values ending with the given string."""
+  identifier_ends_with: String
+
+  """All values not ending with the given string."""
+  identifier_not_ends_with: String
+}
+
+type ResourceSubscriptionPayload {
+  mutation: MutationType!
+  node: Resource
+  updatedFields: [String!]
+  previousValues: ResourcePreviousValues
+}
+
+input ResourceSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResourceSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResourceSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResourceSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ResourceWhereInput
+}
+
+input ResourceUpdateInput {
+  identifier: String
+  attributes: AttributeUpdateManyWithoutResourcesInput
+}
+
+input ResourceUpdateManyDataInput {
+  identifier: String
+}
+
+input ResourceUpdateManyMutationInput {
+  identifier: String
+}
+
+input ResourceUpdateManyWithoutAttributesInput {
+  create: [ResourceCreateWithoutAttributesInput!]
+  connect: [ResourceWhereUniqueInput!]
+  set: [ResourceWhereUniqueInput!]
+  disconnect: [ResourceWhereUniqueInput!]
+  delete: [ResourceWhereUniqueInput!]
+  update: [ResourceUpdateWithWhereUniqueWithoutAttributesInput!]
+  updateMany: [ResourceUpdateManyWithWhereNestedInput!]
+  deleteMany: [ResourceScalarWhereInput!]
+  upsert: [ResourceUpsertWithWhereUniqueWithoutAttributesInput!]
+}
+
+input ResourceUpdateManyWithWhereNestedInput {
+  where: ResourceScalarWhereInput!
+  data: ResourceUpdateManyDataInput!
+}
+
+input ResourceUpdateWithoutAttributesDataInput {
+  identifier: String
+}
+
+input ResourceUpdateWithWhereUniqueWithoutAttributesInput {
+  where: ResourceWhereUniqueInput!
+  data: ResourceUpdateWithoutAttributesDataInput!
+}
+
+input ResourceUpsertWithWhereUniqueWithoutAttributesInput {
+  where: ResourceWhereUniqueInput!
+  update: ResourceUpdateWithoutAttributesDataInput!
+  create: ResourceCreateWithoutAttributesInput!
+}
+
+input ResourceWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ResourceWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ResourceWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ResourceWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  identifier: String
+
+  """All values that are not equal to given value."""
+  identifier_not: String
+
+  """All values that are contained in given list."""
+  identifier_in: [String!]
+
+  """All values that are not contained in given list."""
+  identifier_not_in: [String!]
+
+  """All values less than the given value."""
+  identifier_lt: String
+
+  """All values less than or equal the given value."""
+  identifier_lte: String
+
+  """All values greater than the given value."""
+  identifier_gt: String
+
+  """All values greater than or equal the given value."""
+  identifier_gte: String
+
+  """All values containing the given string."""
+  identifier_contains: String
+
+  """All values not containing the given string."""
+  identifier_not_contains: String
+
+  """All values starting with the given string."""
+  identifier_starts_with: String
+
+  """All values not starting with the given string."""
+  identifier_not_starts_with: String
+
+  """All values ending with the given string."""
+  identifier_ends_with: String
+
+  """All values not ending with the given string."""
+  identifier_not_ends_with: String
+  attributes_every: AttributeWhereInput
+  attributes_some: AttributeWhereInput
+  attributes_none: AttributeWhereInput
+}
+
+input ResourceWhereUniqueInput {
+  id: ID
+  identifier: String
+}
+
+type State implements Node {
+  id: ID!
+  value: String!
+  attribute: Attribute!
+  target: Target!
+}
+
+"""A connection to a list of items."""
+type StateConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [StateEdge]!
+  aggregate: AggregateState!
+}
+
+input StateCreateInput {
+  id: ID
+  value: String!
+  attribute: AttributeCreateOneWithoutStateInput!
+  target: TargetCreateOneWithoutStatesInput!
+}
+
+input StateCreateManyWithoutTargetInput {
+  create: [StateCreateWithoutTargetInput!]
+  connect: [StateWhereUniqueInput!]
+}
+
+input StateCreateOneWithoutAttributeInput {
+  create: StateCreateWithoutAttributeInput
+  connect: StateWhereUniqueInput
+}
+
+input StateCreateWithoutAttributeInput {
+  id: ID
+  value: String!
+  target: TargetCreateOneWithoutStatesInput!
+}
+
+input StateCreateWithoutTargetInput {
+  id: ID
+  value: String!
+  attribute: AttributeCreateOneWithoutStateInput!
+}
+
+"""An edge in a connection."""
+type StateEdge {
+  """The item at the end of the edge."""
+  node: State!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum StateOrderByInput {
+  id_ASC
+  id_DESC
+  value_ASC
+  value_DESC
+}
+
+type StatePreviousValues {
+  id: ID!
+  value: String!
+}
+
+input StateScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StateScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StateScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StateScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+}
+
+type StateSubscriptionPayload {
+  mutation: MutationType!
+  node: State
+  updatedFields: [String!]
+  previousValues: StatePreviousValues
+}
+
+input StateSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StateSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StateSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StateSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: StateWhereInput
+}
+
+input StateUpdateInput {
+  value: String
+  attribute: AttributeUpdateOneRequiredWithoutStateInput
+  target: TargetUpdateOneRequiredWithoutStatesInput
+}
+
+input StateUpdateManyDataInput {
+  value: String
+}
+
+input StateUpdateManyMutationInput {
+  value: String
+}
+
+input StateUpdateManyWithoutTargetInput {
+  create: [StateCreateWithoutTargetInput!]
+  connect: [StateWhereUniqueInput!]
+  set: [StateWhereUniqueInput!]
+  disconnect: [StateWhereUniqueInput!]
+  delete: [StateWhereUniqueInput!]
+  update: [StateUpdateWithWhereUniqueWithoutTargetInput!]
+  updateMany: [StateUpdateManyWithWhereNestedInput!]
+  deleteMany: [StateScalarWhereInput!]
+  upsert: [StateUpsertWithWhereUniqueWithoutTargetInput!]
+}
+
+input StateUpdateManyWithWhereNestedInput {
+  where: StateScalarWhereInput!
+  data: StateUpdateManyDataInput!
+}
+
+input StateUpdateOneWithoutAttributeInput {
+  create: StateCreateWithoutAttributeInput
+  connect: StateWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: StateUpdateWithoutAttributeDataInput
+  upsert: StateUpsertWithoutAttributeInput
+}
+
+input StateUpdateWithoutAttributeDataInput {
+  value: String
+  target: TargetUpdateOneRequiredWithoutStatesInput
+}
+
+input StateUpdateWithoutTargetDataInput {
+  value: String
+  attribute: AttributeUpdateOneRequiredWithoutStateInput
+}
+
+input StateUpdateWithWhereUniqueWithoutTargetInput {
+  where: StateWhereUniqueInput!
+  data: StateUpdateWithoutTargetDataInput!
+}
+
+input StateUpsertWithoutAttributeInput {
+  update: StateUpdateWithoutAttributeDataInput!
+  create: StateCreateWithoutAttributeInput!
+}
+
+input StateUpsertWithWhereUniqueWithoutTargetInput {
+  where: StateWhereUniqueInput!
+  update: StateUpdateWithoutTargetDataInput!
+  create: StateCreateWithoutTargetInput!
+}
+
+input StateWhereInput {
+  """Logical AND on all given filters."""
+  AND: [StateWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [StateWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [StateWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  value: String
+
+  """All values that are not equal to given value."""
+  value_not: String
+
+  """All values that are contained in given list."""
+  value_in: [String!]
+
+  """All values that are not contained in given list."""
+  value_not_in: [String!]
+
+  """All values less than the given value."""
+  value_lt: String
+
+  """All values less than or equal the given value."""
+  value_lte: String
+
+  """All values greater than the given value."""
+  value_gt: String
+
+  """All values greater than or equal the given value."""
+  value_gte: String
+
+  """All values containing the given string."""
+  value_contains: String
+
+  """All values not containing the given string."""
+  value_not_contains: String
+
+  """All values starting with the given string."""
+  value_starts_with: String
+
+  """All values not starting with the given string."""
+  value_not_starts_with: String
+
+  """All values ending with the given string."""
+  value_ends_with: String
+
+  """All values not ending with the given string."""
+  value_not_ends_with: String
+  attribute: AttributeWhereInput
+  target: TargetWhereInput
+}
+
+input StateWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  attribute(where: AttributeSubscriptionWhereInput): AttributeSubscriptionPayload
+  resource(where: ResourceSubscriptionWhereInput): ResourceSubscriptionPayload
+  repair(where: RepairSubscriptionWhereInput): RepairSubscriptionPayload
+  check(where: CheckSubscriptionWhereInput): CheckSubscriptionPayload
+  state(where: StateSubscriptionWhereInput): StateSubscriptionPayload
+  target(where: TargetSubscriptionWhereInput): TargetSubscriptionPayload
+}
+
+type Target implements Node {
+  id: ID!
+  identifier: String!
+  states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State!]
+}
+
+"""A connection to a list of items."""
+type TargetConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TargetEdge]!
+  aggregate: AggregateTarget!
+}
+
+input TargetCreateInput {
+  id: ID
+  identifier: String!
+  states: StateCreateManyWithoutTargetInput
+}
+
+input TargetCreateOneWithoutStatesInput {
+  create: TargetCreateWithoutStatesInput
+  connect: TargetWhereUniqueInput
+}
+
+input TargetCreateWithoutStatesInput {
+  id: ID
+  identifier: String!
+}
+
+"""An edge in a connection."""
+type TargetEdge {
+  """The item at the end of the edge."""
+  node: Target!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TargetOrderByInput {
+  id_ASC
+  id_DESC
+  identifier_ASC
+  identifier_DESC
+}
+
+type TargetPreviousValues {
+  id: ID!
+  identifier: String!
+}
+
+type TargetSubscriptionPayload {
+  mutation: MutationType!
+  node: Target
+  updatedFields: [String!]
+  previousValues: TargetPreviousValues
+}
+
+input TargetSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TargetSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TargetSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TargetSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TargetWhereInput
+}
+
+input TargetUpdateInput {
+  identifier: String
+  states: StateUpdateManyWithoutTargetInput
+}
+
+input TargetUpdateManyMutationInput {
+  identifier: String
+}
+
+input TargetUpdateOneRequiredWithoutStatesInput {
+  create: TargetCreateWithoutStatesInput
+  connect: TargetWhereUniqueInput
+  update: TargetUpdateWithoutStatesDataInput
+  upsert: TargetUpsertWithoutStatesInput
+}
+
+input TargetUpdateWithoutStatesDataInput {
+  identifier: String
+}
+
+input TargetUpsertWithoutStatesInput {
+  update: TargetUpdateWithoutStatesDataInput!
+  create: TargetCreateWithoutStatesInput!
+}
+
+input TargetWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TargetWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TargetWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TargetWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  identifier: String
+
+  """All values that are not equal to given value."""
+  identifier_not: String
+
+  """All values that are contained in given list."""
+  identifier_in: [String!]
+
+  """All values that are not contained in given list."""
+  identifier_not_in: [String!]
+
+  """All values less than the given value."""
+  identifier_lt: String
+
+  """All values less than or equal the given value."""
+  identifier_lte: String
+
+  """All values greater than the given value."""
+  identifier_gt: String
+
+  """All values greater than or equal the given value."""
+  identifier_gte: String
+
+  """All values containing the given string."""
+  identifier_contains: String
+
+  """All values not containing the given string."""
+  identifier_not_contains: String
+
+  """All values starting with the given string."""
+  identifier_starts_with: String
+
+  """All values not starting with the given string."""
+  identifier_not_starts_with: String
+
+  """All values ending with the given string."""
+  identifier_ends_with: String
+
+  """All values not ending with the given string."""
+  identifier_not_ends_with: String
+  states_every: StateWhereInput
+  states_some: StateWhereInput
+  states_none: StateWhereInput
+}
+
+input TargetWhereUniqueInput {
+  id: ID
+}

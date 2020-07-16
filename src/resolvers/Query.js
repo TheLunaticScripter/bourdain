@@ -1,6 +1,6 @@
 const Query = {
-  hello(parent, args, ctx, info) {
-    return "Hello!"
+  resources(parent, args, { prisma }, info) {
+    return prisma.query.resources(null, info)
   }
 }
 

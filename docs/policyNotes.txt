@@ -1,7 +1,7 @@
 Bourdain / Chef BoyaRDB
 
 # Bourdain
-A policy definition tool based on a database and a strict declarative language API.
+A policy definition tool based on a database and a strict declarative language API. ** Add from Jon: Need for an arbitration for policy and maybe the visualization of policy
 
 # BoyaRDB
 A relational database that filled with policy and state data that adheres to both a configuration and compliance use case.
@@ -19,7 +19,7 @@ run the check.command
   exit: 1
   stderr: NULL
 
-value is not "true"
+stdout did not match value of attribute "true"
 run the repair.command
   stdout: NULL
   exit: 0
@@ -82,3 +82,9 @@ else {
 }
 
 target.state(attribute.check).value
+
+
+## thoughts from Jon
+what does the client look like?
+
+can we teach the chef-client to look at this?
