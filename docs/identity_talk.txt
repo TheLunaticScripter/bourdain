@@ -1,0 +1,74 @@
+identity chef-content
+identity chef-customer
+
+your writing graph
+
+chef-customer / success / sales menu
+
+Organization (Group with some level of trust that defines Policy)
+========
+trust Int
+users [User]
+
+User (Granted entry to organization based on trust writes the Policy)
+====
+name
+email
+trust Int
+org [Organizations]
+authorities [Authority]
+
+Authority (Rating Agency and Content Provider)
+=========
+name
+trust Int
+
+Trust (Interface)
+======
+how much
+user
+policy/state
+
+Confidence????
+
+Policy
+======
+Authority
+Organization
+User
+trust TrustRating
+resources [Resource]
+
+Resource
+========
+attributes [Attribute]
+
+Attribute
+=========
+User 
+Authority 
+Organization
+Repair
+Check
+State
+
+Repair
+======
+trust TrustRating
+
+Check
+=====
+trust TrustRating
+
+State
+=====
+trust ProviderRating (Time of last run. Failure rate on a check or repair )
+
+
+1. Trust chef on how to articulate policy and how to converge
+2. Trust the authorities on whether the policy is good or bad (Chef is not an Authority)
+3. Customer trusts itself as the authority on the implementation of the convergence (Chef is not an Authroity greater than the customer)
+4. Ability to verify the trust chain at all levels (Trust but verify). All trust models should be considered (High trust, Low Trust, No Trust)
+5. Through a chain of custody at all levels we transfer transitive trust to either Chef or the Customer from the Authority
+
+chef-cotent policy
