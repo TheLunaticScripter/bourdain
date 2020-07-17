@@ -1,41 +1,59 @@
 type Attribute {
   id: ID! @id @unique
   key: String! 
-  value: String! @unique
+  value: String!
   resources: [Resource!] @relation(name: "AttributeToResource", onDelete: SET_NULL)
-  repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
   check: Check @relation(name: "AttributeToCheck", onDelete: CASCADE, link:INLINE)
-  state: State @relation(name: "AttributeToState", onDelete: SET_NULL, link:INLINE)
+  repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
 }
 
 type Resource {
   id: ID! @id @unique
-  identifier: String! @unique
+  identifier: String!
   attributes: [Attribute]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
 }
 
-type Repair {
+interface Command {
   id: ID! @id @unique
   command: String! @unique
-  attribute: Attribute! @relation(name: "AttributeToRepair", onDelete: SET_NULL)
+  state: State @relation(name: "CommandToState", onDelete: CASCADE)
 }
 
-type Check {
+type Check implements Command {
   id: ID! @id @unique
   command: String! @unique
+  state: CheckState @relation(name: "CheckToState", onDelete: CASCADE, link: INLINE)
   attribute: Attribute! @relation(name: "AttributeToCheck", onDelete: SET_NULL)
 }
 
-## Implementation of Provider
-type State {
+type Repair implements Command {
   id: ID! @id @unique
-  value: String!
-  attribute: Attribute! @relation(name: "AttributeToState", onDelete: SET_NULL)
-  target: Target! @relation(name: "StateToTarget", onDelete: SET_NULL)
+  command: String! @unique
+  state: RepairState @relation(name: "RepairToState", onDelete: CASCADE, link: INLINE)
+  attribute: Attribute! @relation(name: "AttributeToRepair", onDelete: SET_NULL)
 }
 
-type Target {
+## Implementation of Provider
+
+interface State {
   id: ID! @id @unique
-  identifier: String!
-  states: [State]! @relation(name: "StateToTarget", onDelete: CASCADE)
+  stdout: String!
+  stderr: String!
+  exit: Int!
+}
+
+type CheckState implements State {
+  id: ID! @id @unique
+  stdout: String!
+  stderr: String!
+  exit: Int!
+  command: Check! @relation(name: "CheckToState", onDelete: SET_NULL)
+}
+
+type RepairState implements State {
+  id: ID! @id @unique
+  stdout: String!
+  stderr: String!
+  exit: Int!
+  command: Repair! @relation(name: "RepairToState", onDelete: SET_NULL)
 }

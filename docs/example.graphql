@@ -1,0 +1,85 @@
+query resources {
+  resources {
+  	...createResource
+  }
+}
+
+query checks {
+  checks {
+    id
+    command
+  }
+}
+
+mutation createCramfs {
+  createResource(data: {
+		identifier: "cramfs",
+    attributes: {
+      create: {
+        key: "disabled"
+        value: "true"
+        check: {
+          create: {
+            command: "modprobe -n -v cramfs | grep '/install/bin'"
+          }
+        }
+        repair:{
+          create: {
+            command: "echo \"/install/bin cramfs true\" > /etc/modprobd/CIS.conf"
+          }
+        }
+      }
+    }
+  }) {
+    id
+  }
+}
+
+mutation installBash {
+  createResource(data: {
+    identifier: "bash",
+    attributes: {
+      create: {
+        key: "installed"
+        value: "true"
+        check: {
+          create: {
+            command: "rpm -qa bash"
+          }
+        },
+        repair: {
+          create: {
+            command: "rpm -Uvh bash"
+          }
+        }
+      }
+    }
+  }) {
+    ...createResource
+  }
+}
+
+fragment createResource on Resource {
+  id
+  identifier
+  attributes {
+    key
+    value
+    check {
+      command
+      state {
+        stdout
+        stderr
+        exit
+      }
+    }
+    repair {
+      command
+      state {
+        stdout
+        stderr
+        exit
+      }
+    }
+  }
+}
