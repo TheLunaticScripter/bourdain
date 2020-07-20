@@ -1,3 +1,36 @@
 type Query {
-  hello: String
+  resources: [Resource!]!
+  agentExecutionList: [Resource!]!
 }
+
+type Resource {
+  id: ID!
+  identifier: String!
+  attributes: [Attribute]
+}
+
+type Attribute {
+  id: ID!
+  key: String!
+  value: String!
+  repair: Repair
+  check: Check!
+  state: State
+}
+
+type Repair {
+  id: ID!
+  command: String!
+}
+
+type Check {
+  id: ID!
+  command: String!
+}
+
+type State {
+  id: ID!
+  value: String!
+}
+
+type C

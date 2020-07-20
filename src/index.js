@@ -1,6 +1,6 @@
 import { GraphQLServer } from 'graphql-yoga'
-import db from './db'
 import Query from './resolvers/Query'
+import prisma from './prisma'
 
 const server = new GraphQLServer({
     typeDefs: './src/schema.graphql',
@@ -8,7 +8,7 @@ const server = new GraphQLServer({
       Query
     },
     context: {
-        db
+        prisma
     }
 })
 

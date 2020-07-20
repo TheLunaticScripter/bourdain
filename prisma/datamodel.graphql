@@ -1,40 +1,104 @@
+# A Policy is a combination of hard controls and soft controls to help reduce the risk of systems and networks
+# Compliance is achieved by:
+# 1. The Definition of Policy in a declarative functional language
+# 2. The checking and repairing of policy via the convergent configuration management model
+# 3. Compliance is measured by convergence or a mix of convergence and exceptions/waivers
+# 4. Security is tied to the evaluation of risk based on Compliance
+
+# An Attribute is a desired state on a system
+# It had a key to describe what the desired state is i.e. disabled, created, or enabled (Preterite: A completed action in a time before now)
+# The value is the desired return of the check command i.e. true, false (Assertion)
+# Every Attribute needs to be run a minimum of twice to ensure convergence and a theoretical maximum of up to two runs that are equal in state
 type Attribute {
   id: ID! @id @unique
   key: String! 
-  value: String! @unique
+  value: String!
   resources: [Resource!] @relation(name: "AttributeToResource", onDelete: SET_NULL)
-  repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
   check: Check @relation(name: "AttributeToCheck", onDelete: CASCADE, link:INLINE)
-  state: State @relation(name: "AttributeToState", onDelete: SET_NULL, link:INLINE)
+  repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
 }
 
+# A resource is an list of attributes that declares a comprehensive desired state for a specific thing on a system
+# An identifier is used to designate a specific resource. i.e. /tmp/foo, cramfs, Administrator, httpd ... 
 type Resource {
   id: ID! @id @unique
-  identifier: String! @unique
+  identifier: String!
   attributes: [Attribute]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
 }
 
-type Repair {
+# A control is a human designation of a group of resources or a resource to describe a Compliance use case
+# It helps humans design policy
+# it has an impact and a threat model to help identify risk
+# Controls are defined as hard controls (an action can be taken) that may fulfill a soft control
+type Control {
   id: ID! @id @unique
-  command: String! @unique
-  attribute: Attribute! @relation(name: "AttributeToRepair", onDelete: SET_NULL)
+  resources: [Resource]
+  impact: Int # Impact is potentially tied to something like STRIDE or OCTAVE or the NIST RMF
+  # Help better clasify a set of controls tied to a threat model
 }
 
-type Check {
+# A command that is run on a Target
+# The output of the command is returned as state
+# A command will most likely be run by an agent
+interface Command {
   id: ID! @id @unique
   command: String! @unique
+  state: State @relation(name: "CommandToState", onDelete: CASCADE)
+}
+
+# Check is a command written as an Assertion
+# That checks current state of an Attribute
+type Check implements Command {
+  id: ID! @id @unique
+  command: String! @unique
+  state: CheckState @relation(name: "CheckToState", onDelete: CASCADE, link: INLINE)
   attribute: Attribute! @relation(name: "AttributeToCheck", onDelete: SET_NULL)
 }
 
-type State {
+# A idempotent command that converges a attribute to a desired state
+type Repair implements Command {
   id: ID! @id @unique
-  value: String!
-  attribute: Attribute! @relation(name: "AttributeToState", onDelete: SET_NULL)
-  target: Target! @relation(name: "StateToTarget", onDelete: SET_NULL)
+  command: String! @unique
+  state: RepairState @relation(name: "RepairToState", onDelete: CASCADE, link: INLINE)
+  attribute: Attribute! @relation(name: "AttributeToRepair", onDelete: SET_NULL)
 }
 
+# The State is the result of running commands on systems
+# Potentially the State is where we track side-effects and/or convergence
+interface State {
+  id: ID! @id @unique
+  stdout: String!
+  stderr: String!
+  exit: Int!
+}
+
+# CheckState is the result of running a Check command
+# The value of CheckState determines if we are doing check only or check and repair
+# If doing check and repair, timing matters between the check and repair (maybe?)
+type CheckState implements State {
+  id: ID! @id @unique
+  stdout: String!
+  stderr: String!
+  exit: Int!
+  command: Check! @relation(name: "CheckToState", onDelete: SET_NULL)
+}
+
+# RepairState is the result of running the repair command 
+# RepairState is how we determine convergence
+# Repair States can indicate side-effects or convergence depending on a "final CheckState" or how the repair command was written
+# A convergent model is assumed to run more than one time
+type RepairState implements State {
+  id: ID! @id @unique
+  stdout: String!
+  stderr: String!
+  exit: Int!
+  command: Repair! @relation(name: "RepairToState", onDelete: SET_NULL)
+}
+
+# Anything managed via policy
 type Target {
   id: ID! @id @unique
-  identifier: String!
-  states: [State]! @relation(name: "StateToTarget", onDelete: CASCADE)
+  identifier: String! @unique
+  credentials: String!
+  agent: String!
 }
