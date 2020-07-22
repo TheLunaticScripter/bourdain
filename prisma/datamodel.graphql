@@ -5,6 +5,13 @@
 # 3. Compliance is measured by convergence or a mix of convergence and exceptions/waivers
 # 4. Security is tied to the evaluation of risk based on Compliance
 
+type Policy {
+  id: ID! @id @unique
+  title: String!
+  desc: String!
+  controls: [Control!]! @relation(name: "PolicyToControl", onDelete: SET_NULL)
+}
+
 # An Attribute is a desired state on a system
 # It had a key to describe what the desired state is i.e. disabled, created, or enabled (Preterite: A completed action in a time before now)
 # The value is the desired return of the check command i.e. true, false (Assertion)
@@ -13,7 +20,8 @@ type Attribute {
   id: ID! @id @unique
   key: String! 
   value: String!
-  resources: [Resource!] @relation(name: "AttributeToResource", onDelete: SET_NULL)
+  # Add a type to help
+  resources: [Resource!]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
   check: Check @relation(name: "AttributeToCheck", onDelete: CASCADE, link:INLINE)
   repair: Repair @relation(name: "AttributeToRepair", onDelete: CASCADE, link: INLINE)
 }
@@ -23,7 +31,7 @@ type Attribute {
 type Resource {
   id: ID! @id @unique
   identifier: String!
-  attributes: [Attribute]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
+  attributes: [Attribute!]! @relation(name: "AttributeToResource", onDelete: SET_NULL)
 }
 
 # A control is a human designation of a group of resources or a resource to describe a Compliance use case
@@ -32,7 +40,11 @@ type Resource {
 # Controls are defined as hard controls (an action can be taken) that may fulfill a soft control
 type Control {
   id: ID! @id @unique
-  resources: [Resource]
+  resources: [Resource!]!
+  policies: [Policy] @relation(name: "PolicyToControl", onDelete: SET_NULL)
+  title: String!
+  desc: String
+  attributes: [Attribute]
   impact: Int # Impact is potentially tied to something like STRIDE or OCTAVE or the NIST RMF
   # Help better clasify a set of controls tied to a threat model
 }
