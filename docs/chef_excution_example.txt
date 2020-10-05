@@ -1,0 +1,39 @@
+execute 'Cramfs should be disabled' do
+  command "echo \"/install/bin cramfs true\" > /etc/modprobd/CIS.conf"
+  not_if "modprobe -n -v cramfs | grep '/install/bin'"
+end
+
+{
+  "data": {
+    "policies": [
+      {
+        "title": "CIS Centos 7 Level 1 Server",
+        "desc": "some thing",
+        "controls": [
+          {
+            "title": "Cramfs should be disabled",
+            "desc": null,
+            "impact": 1,
+            "resources": [
+              {
+                "identifier": "cramfs",
+                "attributes": [
+                  {
+                    "key": "disabled",
+                    "value": "true",
+                    "check": {
+                      "command": "modprobe -n -v cramfs | grep '/install/bin'"
+                    },
+                    "repair": {
+                      "command": "echo \"/install/bin cramfs true\" > /etc/modprobd/CIS.conf"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
