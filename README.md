@@ -38,7 +38,7 @@ input KernelModuleInputeType {
   blacklisted: Boolean
 }
 
-Copyright [2020] [John Snow, Stephen Lauck, Jon Morrow, Nathan Cerny]
+Copyright [2020] [John Snow, Stephen Lauck]
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
