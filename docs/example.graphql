@@ -83,3 +83,49 @@ fragment createResource on Resource {
     }
   }
 }
+
+# This is a new policy example starting from the ground up using STIG and CIS
+query	policies {
+  policies {
+    title
+    controls {
+      resources {
+				attributes {
+          check {
+            command
+          }
+        }
+      }
+    }
+  }
+}
+
+mutation CISCentos7level1Server {
+  createPolicy(data:{
+    title: "CIS Centos 7 Level 1 Server"
+    desc: "some thing"
+    controls: {
+      create:{
+        title: "Cramfs should be disabled"
+        impact: 1
+        resources: {
+          connect: {
+            id: "ckcqissb90ev709048tyshq1f"
+          }
+        }
+      }
+    }
+  }) {
+    title
+    controls {
+      title
+      resources {
+        attributes {
+          check {
+            command
+          }
+        }
+      }
+    }
+  }
+}
